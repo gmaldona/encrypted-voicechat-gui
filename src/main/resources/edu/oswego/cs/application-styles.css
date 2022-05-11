@@ -1,0 +1,25 @@
+VBox{
+     -fx-background-color:  #333333;
+}
+#B{
+    -fx-background-color:  linear-gradient(#ffaa49, #ffcf79);
+}
+#joinServerButton{
+    -fx-background-color:  linear-gradient(#ffaa49, #ffcf79);
+}
+#RefreshButton{
+    -fx-background-color:  linear-gradient(#ffaa49, #ffcf79);
+}
+#BackButton{
+    -fx-background-color:  linear-gradient(#ffaa49, #ffcf79);
+}
+#P{
+     -fx-background-color:  linear-gradient(#090323, #4a2bae);
+}
+
+#Pane {
+     -fx-background-color:  linear-gradient(#090323, #4a2bae);
+}
+#LV{
+     -fx-background-color:  #333333;
+}
