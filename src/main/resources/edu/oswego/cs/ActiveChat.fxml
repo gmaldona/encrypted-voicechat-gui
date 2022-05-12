@@ -27,8 +27,6 @@
         </rowConstraints>
          <children>
             <ImageView fitHeight="33.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-            <Circle blendMode="SRC_ATOP" fill="DODGERBLUE" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle blendMode="SRC_ATOP" fill="DODGERBLUE" layoutX="40.0" layoutY="28.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
             <ImageView fitHeight="33.0" fitWidth="200.0" layoutX="82.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ImageView fitHeight="33.0" fitWidth="200.0" layoutX="82.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ImageView fitHeight="33.0" fitWidth="200.0" layoutX="82.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -39,7 +37,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Button id="B" layoutX="253.0" layoutY="206.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="78.0" onAction="#talkButton"
+      <Button id="B" layoutX="253.0" layoutY="356.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="78.0" onAction="#talkButton"
               text="Talk">
          <font>
             <Font size="20.0" />
