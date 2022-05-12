@@ -43,7 +43,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Label layoutX="130.0" layoutY="21.0" prefHeight="17.0" prefWidth="139.0" text="Connected to &quot;Cleaning&quot;" textFill="#0f9413" />
+      <Label id="L" fx:id="chatroomLabel" layoutX="130.0" layoutY="21.0" prefHeight="17.0" prefWidth="139.0" textFill="#0f9413" />
       <Rectangle id="Rec" arcHeight="5.0" arcWidth="5.0" fill="#b7d7f5" height="37.0" layoutX="109.0" layoutY="11.0" opacity="0.5" stroke="#b7d7f5" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="5.0" width="180.0" />
    </children>
 </Pane>

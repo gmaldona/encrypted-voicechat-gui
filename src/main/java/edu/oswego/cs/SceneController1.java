@@ -36,6 +36,7 @@ public class SceneController1 {
     private Stage stage;
     private Scene scene;
     public Label connectedToLabel = null;
+    public Label chatroomLabel;
 
     public TextField ServerNameTextField;
     public TextField PasswordTextField;
@@ -115,7 +116,6 @@ public class SceneController1 {
                     ParticipantData participantData = new ParticipantData(ParticipantOpcode.LIST_SERVERS, EncryptedVoiceChat.port);
                     EncryptedVoiceChat.socket.getOutputStream().write(participantData.getBytes());
                     byte[] buffer = new byte[1024];
-                    System.out.println(Arrays.toString(buffer));
                     EncryptedVoiceChat.socket.getInputStream().read(buffer);
                      return Packet.parse(buffer);
                 }
@@ -231,6 +231,14 @@ public class SceneController1 {
         } else if (p instanceof ParticipantACK) {
             EncryptedVoiceChat.connectedToRoom = true;
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ActiveChat.fxml")));
+            for (Node n : root.getChildrenUnmodifiable()) {
+                if (n!=null) {
+                    if (n.getId() != null && n.getId().equals("L")) {
+                        ((Label) n).setText(EncryptedVoiceChat.selectedRoom);
+                        ((Label) n).setAlignment(Pos.CENTER);
+                    }
+                }
+            }
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
@@ -269,6 +277,14 @@ public class SceneController1 {
             // error check
 
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ActiveChat.fxml")));
+            for (Node n : root.getChildrenUnmodifiable()) {
+                if (n!=null) {
+                    if (n.getId() != null && n.getId().equals("L")) {
+                        ((Label) n).setText(serverName);
+                        ((Label) n).setAlignment(Pos.CENTER);
+                    }
+                }
+            }
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
