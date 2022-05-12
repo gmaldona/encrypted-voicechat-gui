@@ -30,7 +30,7 @@ public class EncryptedVoiceChat extends Application {
     Label connectedToLabel;
 
     static String connectionHost = "moxie.cs.oswego.edu";
-    static int connectionPort = 15550;
+    static int connectionPort = 15551;
 
     static ArrayList<String> chatrooms = new ArrayList<>();
 

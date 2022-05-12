@@ -23,7 +23,7 @@ public class ServerConnection {
     public BooleanProperty connet = new SimpleBooleanProperty(this, "connected", false);
 
     static String connectionHost = "moxie.cs.oswego.edu";
-    static int connectionPort = 15550;
+    static int connectionPort = 15551;
 
     public boolean isConnet() {
         return connet.get();

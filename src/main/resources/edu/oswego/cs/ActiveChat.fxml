@@ -37,7 +37,7 @@
             <Font size="20.0" />
          </font>
       </Button>
-      <Button id="B" layoutX="253.0" layoutY="356.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="78.0" onAction="#talkButton"
+      <Button id="B" fx:id="talkButton" layoutX="253.0" layoutY="356.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" onAction="#talkButton"
               text="Talk">
          <font>
             <Font size="20.0" />

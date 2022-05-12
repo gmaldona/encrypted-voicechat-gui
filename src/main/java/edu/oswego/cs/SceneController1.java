@@ -3,6 +3,8 @@ package edu.oswego.cs;
 import edu.oswego.cs.network.opcodes.PacketOpcode;
 import edu.oswego.cs.network.opcodes.ParticipantOpcode;
 import edu.oswego.cs.network.packets.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,6 +23,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SceneController1 {
@@ -43,7 +46,8 @@ public class SceneController1 {
     public volatile static ParticipantACK participantACK;
     public volatile static ParticipantData participantData;
 
-    public Button Talk;
+    public Button talkButton;
+    public volatile boolean isTalking = false;
 
     @FXML
     public void switchToMainMenu(ActionEvent event) throws IOException {
@@ -207,10 +211,7 @@ public class SceneController1 {
                 p = future.get(300, TimeUnit.MILLISECONDS);
                 break;
             } catch (TimeoutException ex) {
-                System.out.println("yuhhh");
                 if (participantACK != null || participantData != null) {
-                    System.out.println("DATA:" + participantData);
-                    System.out.println("ACK:" + Arrays.toString(participantACK.getParams()));
                     p = participantACK;
                     break;
                 }
@@ -279,46 +280,34 @@ public class SceneController1 {
     }
 
     @FXML
-    public void talkButton(ActionEvent event) {
-        new Thread(() -> {
-            AudioCapture audioCapture = new AudioCapture();
-            new Thread(audioCapture::startCapture).start();
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            audioCapture.stopCapture();
+    public void talkButton(ActionEvent event) throws InterruptedException {
 
-            FileInputStream fileIn = null;
-            try {
-                fileIn = new FileInputStream("audio.wav");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            SoundPacket soundPacket = new SoundPacket(PacketOpcode.SRQ, EncryptedVoiceChat.port);
-            try {
-                EncryptedVoiceChat.socket.getOutputStream().write(soundPacket.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        Task<Void> talk = new Task<Void>() {
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            @Override
+            protected Void call() throws Exception {
+                AudioCapture audioCapture = new AudioCapture();
+                new Thread(audioCapture::startCapture).start();
+                try {
+                    talkButton.setText("Talking");
+                    Thread.sleep(5000);
+                    audioCapture.stopCapture();
+
+                    FileInputStream fileIn = new FileInputStream("audio.wav");
+                    SoundPacket soundPacket = new SoundPacket(PacketOpcode.SRQ, EncryptedVoiceChat.port);
+                    EncryptedVoiceChat.socket.getOutputStream().write(soundPacket.getBytes());
+                    Thread.sleep(1000);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(EncryptedVoiceChat.socket.getOutputStream());
+                    objectOutputStream.writeObject(fileIn.readAllBytes());
+
+                } catch (Exception e) {e.printStackTrace();}
+                talkButton.setText("Talk");
+                return null;
             }
-            ObjectOutputStream objectOutputStream = null;
-            try {
-                objectOutputStream = new ObjectOutputStream(EncryptedVoiceChat.socket.getOutputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                objectOutputStream.writeObject(fileIn.readAllBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        };
+        talk.run();
+        //talk.messageProperty().addListener((obs, oldMessage, newMessage) -> talkButton.setText(newMessage));
+
+
     }
 }
